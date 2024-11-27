@@ -10,9 +10,10 @@ def process_opendss_models(opendss_paths: list[Path], output_path: Path):
     gdm_version = importlib.metadata.version("grid-data-models")
     for opendss_path in opendss_paths:
         json_file_name = opendss_path.parent.name + '.json'
-        output_path = output_path / gdm_version.replace(".", "_") / json_file_name
+        output_path = output_path / gdm_version.replace(".", "_")
+        output_path.mkdir(parents=True, exist_ok=True)
         sys = Reader(opendss_path).get_system()
-        sys.to_json(output_path)
+        sys.to_json(output_path/ json_file_name)
 
 def save_output(key: str, value: str, file_path: str):
     """Function to save output."""
