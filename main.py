@@ -2,6 +2,7 @@ from pathlib import Path
 import importlib.metadata
 import os 
 import traceback
+from uuid import uuid4
 
 from ditto.readers.opendss.reader import Reader
 
@@ -38,7 +39,10 @@ if __name__ == '__main__':
                 root_path / "p5r/Master_pv.dss"
             ],
             Path(datapath)
-        )   
+        )
+        gdm_version = importlib.metadata.version("grid-data-models")
+        save_output("branch", f"auto/{gdm_version}_{str(uuid4())}", output_file)
+
     except Exception as _:
         save_multiline_output(
                 "errormessage", traceback.format_exc(), output_file
