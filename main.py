@@ -9,8 +9,8 @@ from ditto.readers.opendss.reader import Reader
 def process_opendss_models(opendss_paths: list[Path], output_path: Path):
     gdm_version = importlib.metadata.version("grid-data-models")
     for opendss_path in opendss_paths:
-        json_file_name = opendss_path.stem + '.json'
-        output_path = output_path / gdm_version / json_file_name
+        json_file_name = opendss_path.parent.name + '.json'
+        output_path = output_path / gdm_version.replace(".", "_") / json_file_name
         sys = Reader(opendss_path).get_system()
         sys.to_json(output_path)
 
