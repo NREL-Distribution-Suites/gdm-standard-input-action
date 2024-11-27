@@ -6,6 +6,28 @@ from uuid import uuid4
 
 from ditto.readers.opendss.reader import Reader
 
+def change_permissions_recursively(folder_path, mode=0o755):
+    """
+    Change permissions of a folder and all its contents recursively.
+
+    Args:
+        folder_path (str): Path to the folder.
+        mode (int): The permissions to set (default is 0o755).
+    """
+    for root, dirs, files in os.walk(folder_path):
+        # Change permissions for directories
+        for dir_name in dirs:
+            dir_path = os.path.join(root, dir_name)
+            os.chmod(dir_path, mode)
+        
+        # Change permissions for files
+        for file_name in files:
+            file_path = os.path.join(root, file_name)
+            os.chmod(file_path, mode)
+    
+    # Change permissions for the top-level folder itself
+    os.chmod(folder_path, mode)
+
 def process_opendss_models(opendss_paths: list[Path], output_path: Path):
     gdm_version = importlib.metadata.version("grid-data-models")
     for opendss_path in opendss_paths:
@@ -29,6 +51,8 @@ def save_multiline_output(key: str, value: str, file_path: str):
         print(delimiter, file=fh)
 
 
+
+
 if __name__ == '__main__':
     
     try:
@@ -41,6 +65,7 @@ if __name__ == '__main__':
             ],
             Path(datapath)
         )
+        change_permissions_recursively(datapath)
         gdm_version = importlib.metadata.version("grid-data-models")
         save_output("branch", f"auto/{gdm_version}_{str(uuid4())}", output_file)
 
