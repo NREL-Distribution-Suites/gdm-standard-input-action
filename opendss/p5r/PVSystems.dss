@@ -1,0 +1,5 @@
+
+New Loadshape.pv_shape npts= 35040 interval=0.25 mult = (file=SFO_36.5925_-121.0963_15_270.csv)
+
+New PVSystem.pv_load_p5rlv40 bus1=p5rlv40.1.2.3 phases=3 kV=0.48 kVA=2.5 Pmpp=3.0 %Cutout=0.1 %Cutin=0.1 Model=1 irradiance=1 yearly=pv_shape
+New PVSystem.pv_load_p5rlv40_1 bus1=p5rlv40.1.2.3 phases=3 kV=0.48 kVA=2.5 Pmpp=5.0 %Cutout=0.1 %Cutin=0.1 Model=1 irradiance=1 yearly=pv_shape

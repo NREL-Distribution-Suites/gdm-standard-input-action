@@ -1,0 +1,4 @@
+New Loadshape.com_kw_41421_pu npts= 35040 interval=0.25 mult = (file=com_kw_41421_pu.csv) qmult = (file=com_kvar_41421_pu.csv)
+
+New Loadshape.com_kw_29611_pu npts= 35040 interval=0.25 mult = (file=com_kw_29611_pu.csv) qmult = (file=com_kvar_29611_pu.csv)
+

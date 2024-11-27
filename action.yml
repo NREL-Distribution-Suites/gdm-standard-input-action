@@ -1,0 +1,15 @@
+name: "GDM Case Builder"
+description: "Use this action to build GDM cases."
+author: "Kapil Duwadi, Aadil Latif"
+inputs:
+  datapath:
+    description: "Path to dump case files."
+    required: true 
+outputs:
+  branch:
+    description: "Branch name to be created"
+  errormessage:
+    description: "Error message associated with parsing."
+runs:
+  using: docker
+  image: "Dockerfile"

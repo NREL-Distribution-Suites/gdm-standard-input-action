@@ -1,0 +1,4 @@
+New Load.load_p5rlv40 conn=wye bus1=p5rlv40.1.2.3 kV=0.48 Vminpu=0.8 Vmaxpu=1.2 model=1 kW=5.133773823597883 kvar=1.1902933256444066 Phases=3 yearly=com_kw_41421_pu
+
+New Load.load_p5rlv265 conn=wye bus1=p5rlv265.1.2.3 kV=0.48 Vminpu=0.8 Vmaxpu=1.2 model=1 kW=4.218355339458662 kvar=1.0973386578430595 Phases=3 yearly=com_kw_29611_pu
+
