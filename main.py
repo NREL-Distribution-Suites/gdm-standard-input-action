@@ -3,6 +3,7 @@ import importlib.metadata
 import os 
 import traceback
 from uuid import uuid4
+import shutil
 
 from ditto.readers.opendss.reader import Reader
 
@@ -52,18 +53,19 @@ def save_multiline_output(key: str, value: str, file_path: str):
 
 
 
-
 if __name__ == '__main__':
     
     try:
         root_path = Path(__file__).parent / "opendss"
         datapath = os.environ["INPUT_DATAPATH"]
         output_file = os.environ["GITHUB_OUTPUT"]
+        datapath = Path(datapath)
+        shutil.rmtree(datapath)
         process_opendss_models(
             [
                 file_path / 'Master.dss' for file_path in root_path.iterdir()
             ],
-            Path(datapath)
+            datapath
         )
         change_permissions_recursively(datapath)
         gdm_version = importlib.metadata.version("grid-data-models")
