@@ -47,7 +47,8 @@ The following outputs can be used by subsequent workflow steps.
 
 | Name | Contributor | Description |
 |------|------------|--------------|
-| `p5r` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Slightly modified version of sub feeder within `P5R` region SMARTDS data from `SFO` area. Added PVsystem.
+| `p5r` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Slightly modified version of sub feeder within `P5R` region SMARTDS data from `SFO` area. Added PVsystem.|
+| `testcasev1` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Simple test case for CADET testing.|
 
 ## Adding New Dataset
 
