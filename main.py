@@ -61,7 +61,7 @@ if __name__ == '__main__':
         output_file = os.environ["GITHUB_OUTPUT"]
         process_opendss_models(
             [
-                root_path / "p5r/Master_pv.dss"
+                file_path / 'Master.dss' for file_path in root_path.iterdir(recursive=False)
             ],
             Path(datapath)
         )

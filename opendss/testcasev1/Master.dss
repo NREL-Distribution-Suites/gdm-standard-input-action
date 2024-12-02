@@ -1,0 +1,91 @@
+clear
+
+new circuit.testcase bus1=sourcebus pu=1.02 basekv=69 r1=1e-05 x1=1e-5 r0=1e-05 x0=1e-05
+
+New linecode.6 nphases=3
+~ rmatrix=[0.457254091 0.018049545 0.018049545 | 0.018049545 0.457254091 0.018049545 | 0.018049545 0.018049545 0.457254091] 
+~ xmatrix=[0.101700148 0.070380881 0.062416108 | 0.070380881 0.101700148 0.070380881 | 0.062416108 0.070380881 0.101700148]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=65  {65 1.25 *} units=kft
+
+
+New linecode.4 nphases=3
+~ rmatrix=[0.482632879 0.018049545 0.0180495455 | 0.018049545 0.482632879 0.018049545 | 0.018049545 0.018049545 0.482632879] 
+~ xmatrix=[0.296365866 0.265053738 0.257088964 | 0.265053738 0.296365866 0.265053738 | 0.257088964 0.265053738 0.296365866]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=90  {90 1.25 *} units=kft
+
+
+
+new transformer.sub phases=3 windings=2 buses=[sourcebus b101]  conns=[delta wye] kvs=[69 12.47] kvas=[2000 2000] %rs=[0.01 0.01] x12=7.9 %loadloss=0.002 %noloadloss=0.002
+
+new line.line1 bus1=b101 bus2=b102 linecode=4 length=0.6 units=km 
+new line.line2 bus1=b102 bus2=b103 linecode=4 length=0.6 units=km 
+new line.line3 bus1=b103 bus2=b104 linecode=4 length=0.6 units=km 
+new line.line4 bus1=b104 bus2=b105 linecode=4 length=0.6 units=km 
+new line.line5 bus1=b105 bus2=b106 linecode=4 length=0.6 units=km 
+new line.line6 bus1=b106 bus2=b107 linecode=4 length=0.6 units=km 
+new line.line7 bus1=b107 bus2=b108 linecode=4 length=0.6 units=km 
+new line.line8 bus1=b108 bus2=b109 linecode=4 length=0.6 units=km 
+new line.line9 bus1=b109 bus2=b110 linecode=4 length=0.6 units=km 
+
+
+new transformer.tr1 phases=3 windings=2 buses=[b103 b1030] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new load.load1 bus1=b1030 phases=3 kv=0.416 kw=350 pf=1 conn=wye 
+
+new transformer.tr2 phases=3 windings=2 buses=[b106 b1060]  conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new load.load2 bus1=b1060 phases=3 kv=0.416 kw=350 pf=1 conn=wye 
+
+new transformer.tr3 phases=3 windings=2 buses=[b109 b1090]  conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new load.load3 bus1=b1090 phases=3 kv=0.416 kw=350 pf=1 conn=wye
+
+
+new transformer.tr4 phases=3 windings=2 buses=[b104 b1040]  conns=[wye wye] kvs=[12.47 0.416] kvas=[50 50]  %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.line10 bus1=b1040 bus2=b1041 linecode=6 length=0.1 units=km 
+new line.line11 bus1=b1041 bus2=b1042 linecode=6 length=0.1 units=km 
+new line.line12 bus1=b1042 bus2=b1043 linecode=6 length=0.1 units=km 
+new line.line13 bus1=b1043 bus2=b1044 linecode=6 length=0.1 units=km 
+new load.load4 bus1=b1041 phases=3 kv=0.416 kw=12 pf=1 conn=wye 
+new load.load5 bus1=b1042 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+new load.load6 bus1=b1043 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+new load.load7 bus1=b1044 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+
+
+New linecode.1 nphases=3
+~ rmatrix=[ 0.249867727 0.018049545 0.018049545 | 0.018049545 0.249867727 0.018049545 | 0.018049545 0.018049545 0.249867727] 
+~ xmatrix=[0.288376719 0.257095798 0.249131025 | 0.257095798 0.288376719 0.257095798 |  0.249131025 0.257095798 0.288376719]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=177  {177 1.25 *} units=kft
+
+new transformer.tr5 phases=3 windings=2 buses=[b107 b1070] conns=[wye wye]  kvs=[12.47 0.416] kvas=[150,150] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.line14 bus1=b1070 bus2=b1071 linecode=1 length=0.1 units=km 
+new line.line15 bus1=b1071 bus2=b1072 linecode=1 length=0.1 units=km 
+new line.line16 bus1=b1072 bus2=b1073 linecode=1 length=0.1 units=km 
+new line.line17 bus1=b1073 bus2=b1074 linecode=1 length=0.1 units=km 
+new load.load8 bus1=b1071 phases=3 kv=0.416 kw=35 pf=1 conn=wye
+new load.load9 bus1=b1072 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+new load.load10 bus1=b1073 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+new load.load11 bus1=b1074 phases=3 kv=0.416 kw=25 pf=1 conn=wye
+
+New linecode.2/0 nphases=3
+~ rmatrix=[ 0.163693485 0.018049545 0.018049545 | 0.018049545 0.163693485 0.018049545 | 0.018049545 0.018049545 0.163693485] 
+~ xmatrix=[0.283040781 0.251744507 0.243779734 | 0.251744507 0.283040781 0.251744507 | 0.243779734 0.251744507 0.283040781]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=230  {230 1.25 *}
+
+new transformer.tr6 phases=3 windings=2 buses=[b110 b1100] conns=[wye wye] kvs=[12.47 0.416] kvas=[250,250] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.line18 bus1=b1100 bus2=b1101 linecode=2/0 length=0.1 units=km 
+new line.line19 bus1=b1101 bus2=b1102 linecode=2/0 length=0.1 units=km 
+new line.line20 bus1=b1102 bus2=b1103 linecode=2/0 length=0.1 units=km 
+new line.line21 bus1=b1103 bus2=b1104 linecode=2/0 length=0.1 units=km 
+new load.load12 bus1=b1101 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.load13 bus1=b1102 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.load14 bus1=b1103 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.load15 bus1=b1104 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+
+
+Set DefaultBaseFreq=60
+Set VoltageBases=[69, 12.47, 0.416]
+Calcv
+new energymeter.test1 element=transformer.sub
+solve
