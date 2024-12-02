@@ -31,10 +31,13 @@ def change_permissions_recursively(folder_path):
 
 def process_opendss_models(opendss_paths: list[Path], output_path: Path):
     gdm_version = importlib.metadata.version("grid-data-models")
+    new_output_path = output_path / gdm_version.replace(".", "_")
+    if new_output_path.exists():
+        shutil.rmtree(new_output_path)
+    new_output_path.mkdir(parents=True, exist_ok=True)
+
     for opendss_path in opendss_paths:
         json_file_name = opendss_path.parent.name + '.json'
-        new_output_path = output_path / gdm_version.replace(".", "_")
-        new_output_path.mkdir(parents=True, exist_ok=True)
         sys = Reader(opendss_path).get_system()
         sys.to_json(new_output_path/ json_file_name)
 
@@ -60,7 +63,6 @@ if __name__ == '__main__':
         datapath = os.environ["INPUT_DATAPATH"]
         output_file = os.environ["GITHUB_OUTPUT"]
         datapath = Path(datapath)
-        shutil.rmtree(datapath)
         process_opendss_models(
             [
                 file_path / 'Master.dss' for file_path in root_path.iterdir()
