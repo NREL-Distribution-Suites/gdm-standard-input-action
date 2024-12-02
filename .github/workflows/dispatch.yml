@@ -12,6 +12,6 @@ jobs:
       - name: Trigger Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DISPATCH_TOKEN }}
           repository: NREL-Distribution-Suites/gdm-cases
           event-type: trigger-action
