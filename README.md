@@ -49,6 +49,7 @@ The following outputs can be used by subsequent workflow steps.
 |------|------------|--------------|
 | `p5r` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Slightly modified version of sub feeder within `P5R` region SMARTDS data from `SFO` area. Added PVsystem.|
 | `testcasev1` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Simple test case for CADET testing.|
+| `three_feeder_switch` | [@abodh](https://github.com/abodh) | Three feeder test case with switches.|
 
 ## Adding New Dataset
 
