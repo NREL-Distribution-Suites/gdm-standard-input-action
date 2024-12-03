@@ -23,7 +23,7 @@
         "type": "boolean",
         "description": "Indicates whether the item has geographic coordinates."
       },
-      "has_timeseries_data": {
+      "has_time_series_data": {
         "type": "boolean",
         "description": "Indicates whether the item contains time series data."
       },
@@ -38,7 +38,7 @@
       "contributor",
       "contributed_date",
       "has_geo_coordinate",
-      "has_timeseries_data",
+      "has_time_series_data",
       "has_split_phase"
     ],
     "additionalProperties": false

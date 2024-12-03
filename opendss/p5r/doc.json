@@ -4,6 +4,6 @@
     "contributor": "Kapil Duwadi",
     "contributed_date": "2024-12-03",
     "has_geo_coordinate": true,
-    "has_timeseries_data": true,
+    "has_time_series_data": true,
     "has_split_phase": true
 }
