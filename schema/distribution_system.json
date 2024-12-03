@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name of the item."
+      },
+      "description": {
+        "type": "string",
+        "description": "A brief description of the item."
+      },
+      "contributor": {
+        "type": "string",
+        "description": "Name or identifier of the contributor."
+      },
+      "contributed_date": {
+        "type": "string",
+        "format": "date",
+        "description": "Date when the item was contributed, in YYYY-MM-DD format."
+      },
+      "has_geo_coordinate": {
+        "type": "boolean",
+        "description": "Indicates whether the item has geographic coordinates."
+      },
+      "has_timeseries_data": {
+        "type": "boolean",
+        "description": "Indicates whether the item contains time series data."
+      },
+      "has_split_phase": {
+        "type": "boolean",
+        "description": "Indicates whether the item is split-phase."
+      }
+    },
+    "required": [
+      "name",
+      "description",
+      "contributor",
+      "contributed_date",
+      "has_geo_coordinate",
+      "has_timeseries_data",
+      "has_split_phase"
+    ],
+    "additionalProperties": false
+  }
+  

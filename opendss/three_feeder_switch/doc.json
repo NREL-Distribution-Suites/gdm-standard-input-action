@@ -1,0 +1,9 @@
+{
+    "name": "three_feeder_switch",
+    "description": "Three feeder test case with switches.",
+    "contributor": "Abodh Poudyal",
+    "contributed_date": "2024-12-03",
+    "has_geo_coordinate": false,
+    "has_timeseries_data": false,
+    "has_split_phase": false
+}

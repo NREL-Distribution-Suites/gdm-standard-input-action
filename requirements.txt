@@ -1,1 +1,3 @@
 ditto @ git+https://github.com/NREL-Distribution-Suites/ditto
+pytest
+jsonschema
