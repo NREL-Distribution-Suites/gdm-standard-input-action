@@ -53,4 +53,4 @@ The following outputs can be used by subsequent workflow steps.
 
 ## Adding New Dataset
 
-If you want to add new OpenDSS dataset for automatic GDM system creation, please add a folder inside `opendss` folder at the root of this repo by checking out a new branch. Make sure that entry file is named `Master.dss`. Submit a pull request. 
+If you want to add new OpenDSS dataset for automatic GDM system creation, please add a folder inside `opendss` folder at the root of this repo by checking out a new branch. Make sure that entry file is named `Master.dss`. Add `doc.json` in the same folder, make sure to comply with `distribution_system.json` schema. Submit a pull request. 

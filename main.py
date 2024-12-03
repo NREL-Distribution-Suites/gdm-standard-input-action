@@ -1,6 +1,7 @@
 from pathlib import Path
 import importlib.metadata
 import os 
+import json
 import traceback
 from uuid import uuid4
 import shutil
@@ -30,16 +31,32 @@ def change_permissions_recursively(folder_path):
     os.chmod(folder_path, 0o777)
 
 def process_opendss_models(opendss_paths: list[Path], output_path: Path):
-    gdm_version = importlib.metadata.version("grid-data-models")
+    gdm_version = get_gdm_version()
     new_output_path = output_path / gdm_version.replace(".", "_")
     if new_output_path.exists():
         shutil.rmtree(new_output_path)
     new_output_path.mkdir(parents=True, exist_ok=True)
-
+    combined_doc = []
     for opendss_path in opendss_paths:
+        with open(opendss_path.parent / "doc.json", "r", encoding="utf-8") as f:
+            doc = json.load(f)
+            combined_doc.append(doc)
+
+        parent_folder = new_output_path / doc["name"]
+        if parent_folder.exists():
+            shutil.rmtree(parent_folder)
+        parent_folder.mkdir(parents=True, exist_ok=True)
+
         json_file_name = opendss_path.parent.name + '.json'
         sys = Reader(opendss_path).get_system()
-        sys.to_json(new_output_path/ json_file_name)
+        sys.to_json(parent_folder/ json_file_name)
+        
+    with open(output_path / "doc.json", "w", encoding="utf-8") as f:
+        json.dump(combined_doc, f, indent=4)
+
+def get_gdm_version():
+    gdm_version = importlib.metadata.version("grid-data-models")
+    return gdm_version
 
 def save_output(key: str, value: str, file_path: str):
     """Function to save output."""
@@ -62,7 +79,7 @@ if __name__ == '__main__':
         root_path = Path(__file__).parent / "opendss"
         datapath = os.environ["INPUT_DATAPATH"]
         output_file = os.environ["GITHUB_OUTPUT"]
-        datapath = Path(datapath)
+        datapath = Path(datapath) / 'DistributionSystem'
         process_opendss_models(
             [
                 file_path / 'Master.dss' for file_path in root_path.iterdir()
@@ -70,8 +87,7 @@ if __name__ == '__main__':
             datapath
         )
         change_permissions_recursively(datapath)
-        gdm_version = importlib.metadata.version("grid-data-models")
-        save_output("branch", f"auto/{gdm_version}_{str(uuid4())}", output_file)
+        save_output("branch", f"auto/{get_gdm_version()}_{str(uuid4())}", output_file)
 
     except Exception as _:
         save_multiline_output(
