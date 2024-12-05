@@ -82,7 +82,7 @@ def process_catalog(catalog_path: str,output_path: str):
     with open(output_path / "doc.json", "w", encoding="utf-8") as f:
         json.dump(combined_doc, f, indent=4)
     
-    new_output_path = output_path / get_gdm_version().replace(".", "_") / doc["name"]
+    new_output_path = output_path / f"{get_gdm_version()}/{doc['name']}"
     if new_output_path.exists():
         shutil.rmtree(new_output_path)
     new_output_path.mkdir(parents=True, exist_ok=True)
