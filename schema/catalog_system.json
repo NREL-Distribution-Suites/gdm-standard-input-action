@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name of the item."
+      },
+      "description": {
+        "type": "string",
+        "description": "A brief description of the item."
+      },
+      "contributor": {
+        "type": "string",
+        "description": "Name or identifier of the contributor."
+      },
+      "contributed_date": {
+        "type": "string",
+        "format": "date",
+        "description": "Date when the item was contributed, in YYYY-MM-DD format."
+      }
+    },
+    "required": [
+      "name",
+      "description",
+      "contributor",
+      "contributed_date"
+    ],
+    "additionalProperties": false
+  }

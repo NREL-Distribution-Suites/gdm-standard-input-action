@@ -1,12 +1,11 @@
 from pathlib import Path
 
-from gdm import DistributionSystem, SolarEquipment, InverterEquipment, PositiveApparentPower, PositiveActivePower
+from gdm import SolarEquipment, InverterEquipment, PositiveApparentPower, PositiveActivePower
 from gdm.distribution.curve import Curve
 from infrasys import Component
 import pandas as pd
 import numpy as np
 from uuid import uuid4
-from tqdm import tqdm
 
 
 def build_pv_and_inverter_models()-> list[Component]:
@@ -14,7 +13,7 @@ def build_pv_and_inverter_models()-> list[Component]:
     inverter_file = Path(__file__).parent / "adr-library-cec-inverters-2019-03-05.csv"
     pvs_and_inverters = []
     df = pd.read_csv(inverter_file)
-    for idx, row_data in tqdm(df.iterrows()):
+    for idx, row_data in df.iterrows():
         if idx > 1:
 
             cooficients = row_data['ADRCoefficients'].replace('[', '').replace(']', '').replace(' ', ',').split(',')
