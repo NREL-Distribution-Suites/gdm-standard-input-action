@@ -110,3 +110,4 @@ if __name__ == '__main__':
         save_multiline_output(
                 "errormessage", traceback.format_exc(), output_file
             )
+        raise Exception(traceback.format_exc())
