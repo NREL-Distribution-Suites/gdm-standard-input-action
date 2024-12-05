@@ -8,6 +8,8 @@ import shutil
 
 from ditto.readers.opendss.reader import Reader
 
+from catalogs.build_catalogs import build_catalog
+
 def change_permissions_recursively(folder_path):
     """
     Change permissions of a folder and all its contents recursively.
@@ -71,21 +73,36 @@ def save_multiline_output(key: str, value: str, file_path: str):
         print(value, file=fh)
         print(delimiter, file=fh)
 
+def process_catalog(catalog_path: str,output_path: str):
+    catalog_sys = build_catalog()
+    combined_doc = []
+    with open(catalog_path / "doc.json", "r", encoding="utf-8") as f:
+        doc = json.load(f)
+    combined_doc.append(doc)
+    with open(output_path / "doc.json", "w", encoding="utf-8") as f:
+        json.dump(combined_doc, f, indent=4)
+    
+    new_output_path = output_path / get_gdm_version().replace(".", "_") / doc["name"]
+    if new_output_path.exists():
+        shutil.rmtree(new_output_path)
+    new_output_path.mkdir(parents=True, exist_ok=True)
+    catalog_sys.to_json(new_output_path)
 
 
 if __name__ == '__main__':
     
     try:
         root_path = Path(__file__).parent / "opendss"
+        catalog_path = Path(__file__).parent / "catalogs"
         datapath = os.environ["INPUT_DATAPATH"]
         output_file = os.environ["GITHUB_OUTPUT"]
-        datapath = Path(datapath) / 'DistributionSystem'
         process_opendss_models(
             [
                 file_path / 'Master.dss' for file_path in root_path.iterdir()
             ],
-            datapath
+            Path(datapath) / 'DistributionSystem'
         )
+        process_catalog(catalog_path, Path(datapath) / 'CatalogSystem')
         change_permissions_recursively(datapath)
         save_output("branch", f"auto/{get_gdm_version()}_{str(uuid4())}", output_file)
 
