@@ -1,0 +1,235 @@
+clear
+
+new circuit.substation bus1=sourcebus pu=1.02 basekv=69 r1=1e-05 x1=1e-5 r0=1e-05 x0=1e-05
+
+/* ########################################### LINECODES ###################################################################### */
+New linecode.switch nphases=3
+~ rmatrix=[1e-05 0.0 0.0 | 0.0 1e-05 0.0 | 0.0 0.0 1e-05] 
+~ xmatrix=[1e-05 0.0 0.0 | 0.0 1e-05 0.0 | 0.0 0.0 1e-05]
+~ units=kft
+
+New linecode.65amps nphases=3
+~ rmatrix=[0.757254091 0.018049545 0.018049545 | 0.018049545 0.757254091 0.018049545 | 0.018049545 0.018049545 0.757254091] 
+~ xmatrix=[0.301700148 0.270380881 0.262416108 | 0.270380881 0.301700148 0.270380881 | 0.262416108 0.270380881 0.301700148]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=65  {65 1.25 *} units=kft
+
+New linecode.90amps nphases=3
+~ rmatrix=[0.482632879 0.018049545 0.0180495455 | 0.018049545 0.482632879 0.018049545 | 0.018049545 0.018049545 0.482632879] 
+~ xmatrix=[0.296365866 0.265053738 0.257088964 | 0.265053738 0.296365866 0.265053738 | 0.257088964 0.265053738 0.296365866]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=90  {90 1.25 *} units=kft
+
+New linecode.177amps nphases=3
+~ rmatrix=[ 0.249867727 0.018049545 0.018049545 | 0.018049545 0.249867727 0.018049545 | 0.018049545 0.018049545 0.249867727] 
+~ xmatrix=[0.288376719 0.257095798 0.249131025 | 0.257095798 0.288376719 0.257095798 |  0.249131025 0.257095798 0.288376719]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=177  {177 1.25 *} units=kft
+
+New linecode.230amps nphases=3
+~ rmatrix=[ 0.163693485 0.018049545 0.018049545 | 0.018049545 0.163693485 0.018049545 | 0.018049545 0.018049545 0.163693485] 
+~ xmatrix=[0.283040781 0.251744507 0.243779734 | 0.251744507 0.283040781 0.251744507 | 0.243779734 0.251744507 0.283040781]
+~ cmatrix=[15 | -7  15 |-7 -7  15]
+~ Normamps=230  {230 1.25 *} units=kft
+
+! substation
+new line.sourcebus_connector bus1=sourcebus bus2=connector linecode=switch length=1e-05
+new transformer.sub_feeder1 phases=3 windings=2 buses=[connector fdr1] conns=[delta wye] kvs=[69 12.47] kvas=[2000 2000] %rs=[0.01 0.01] x12=7.9 %loadloss=0.002 %noloadloss=0.002
+new transformer.sub_feeder2 phases=3 windings=2 buses=[connector fdr2] conns=[delta wye] kvs=[69 12.47] kvas=[2000 2000] %rs=[0.01 0.01] x12=7.9 %loadloss=0.002 %noloadloss=0.002
+new transformer.sub_feeder3 phases=3 windings=2 buses=[connector fdr3] conns=[delta wye] kvs=[69 12.47] kvas=[2000 2000] %rs=[0.01 0.01] x12=7.9 %loadloss=0.002 %noloadloss=0.002
+
+
+/* ########################################### FEEDER 1 ######################################################################## */
+! Feeder 1 model
+! normally closed switches
+new line.fdr1_fdr1_1 bus1=fdr1 bus2=fdr1_1 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr1_3_fdr1_4 bus1=fdr1_3 bus2=fdr1_4 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr1_7_fdr1_8 bus1=fdr1_7 bus2=fdr1_8 linecode=switch length=0.0001 switch=true units=km
+
+! lines-primary
+new line.fdr1_1_fdr1_2 bus1=fdr1_1 bus2=fdr1_2 linecode=90amps length=0.4 units=km 
+new line.fdr1_2_fdr1_3 bus1=fdr1_2 bus2=fdr1_3 linecode=90amps length=0.4 units=km 
+new line.fdr1_4_fdr1_5 bus1=fdr1_4 bus2=fdr1_5 linecode=90amps length=0.4 units=km 
+new line.fdr1_5_fdr1_6 bus1=fdr1_5 bus2=fdr1_6 linecode=90amps length=0.4 units=km 
+new line.fdr1_6_fdr1_7 bus1=fdr1_6 bus2=fdr1_7 linecode=90amps length=0.4 units=km 
+new line.fdr1_8_fdr1_9 bus1=fdr1_8 bus2=fdr1_9 linecode=90amps length=0.4 units=km 
+
+! transformers connecting to load bus
+new transformer.fdr1_tr1 phases=3 windings=2 buses=[fdr1_2 fdr1_2_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new transformer.fdr1_tr2 phases=3 windings=2 buses=[fdr1_5 fdr1_5_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new transformer.fdr1_tr3 phases=3 windings=2 buses=[fdr1_8 fdr1_8_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+
+! loads on the load bus
+new load.fdr1_load1 bus1=fdr1_2_load phases=3 kv=0.416 kw=250 pf=1 conn=wye
+new load.fdr1_load2 bus1=fdr1_5_load phases=3 kv=0.416 kw=250 pf=1 conn=wye
+new load.fdr1_load3 bus1=fdr1_8_load phases=3 kv=0.416 kw=250 pf=1 conn=wye
+
+! lateral-1
+new transformer.fdr1_tr4 phases=3 windings=2 buses=[fdr1_3 fdr1_3_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[50 50]  %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr1_3_load_fdr1_3_load_4 bus1=fdr1_3_load bus2=fdr1_3_load_4 linecode=65amps length=0.04 units=km 
+new line.fdr1_3_load_4_fdr1_3_load_5 bus1=fdr1_3_load_4 bus2=fdr1_3_load_5 linecode=65amps length=0.04 units=km 
+new line.fdr1_3_load_5_fdr1_3_load_6 bus1=fdr1_3_load_5 bus2=fdr1_3_load_6 linecode=65amps length=0.04 units=km 
+new line.fdr1_3_load_6_fdr1_3_load_7 bus1=fdr1_3_load_6 bus2=fdr1_3_load_7 linecode=65amps length=0.04 units=km 
+!new load.fdr1_load4 bus=fdr1_3_load_4 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+!new load.fdr1_load5 bus=fdr1_3_load_5 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+new load.fdr1_load6 bus=fdr1_3_load_6 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+new load.fdr1_load7 bus=fdr1_3_load_7 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+
+! lateral-2
+new transformer.fdr1_tr5 phases=3 windings=2 buses=[fdr1_6 fdr1_6_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[150,150] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr1_6_load_fdr1_6_load_8 bus1=fdr1_6_load bus2=fdr1_6_load_8 linecode=177amps length=0.04 units=km 
+new line.fdr1_6_load_8_fdr1_6_load_9 bus1=fdr1_6_load_8 bus2=fdr1_6_load_9 linecode=177amps length=0.04 units=km 
+new line.fdr1_6_load_9_fdr1_6_load_10 bus1=fdr1_6_load_9 bus2=fdr1_6_load_10 linecode=177amps length=0.04 units=km 
+new line.fdr1_6_load_10_fdr1_6_load_11 bus1=fdr1_6_load_10 bus2=fdr1_6_load_11 linecode=177amps length=0.04 units=km 
+new load.fdr1_load8 bus=fdr1_6_load_8 phases=3 kv=0.416 kw=35 pf=1 conn=wye
+!new load.fdr1_load9 bus=fdr1_6_load_9 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+!new load.fdr1_load10 bus=fdr1_6_load_10 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+new load.fdr1_load11 bus=fdr1_6_load_11 phases=3 kv=0.416 kw=25 pf=1 conn=wye
+
+! lateral-3
+new transformer.fdr1_tr6 phases=3 windings=2 buses=[fdr1_9 fdr1_9_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[250,250] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr1_9_load_fdr1_9_load_12 bus1=fdr1_9_load bus2=fdr1_9_load_12 linecode=230amps length=0.04 units=km 
+new line.fdr1_9_load_12_fdr1_9_load_13 bus1=fdr1_9_load_12 bus2=fdr1_9_load_13 linecode=230amps length=0.04 units=km 
+new line.fdr1_9_load_13_fdr1_9_load_14 bus1=fdr1_9_load_13 bus2=fdr1_9_load_14 linecode=230amps length=0.04 units=km 
+new line.fdr1_9_load_14_fdr1_9_load_15 bus1=fdr1_9_load_14 bus2=fdr1_9_load_15 linecode=230amps length=0.04 units=km 
+new load.fdr1_load12 bus=fdr1_9_load_12 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.fdr1_load13 bus=fdr1_9_load_13 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+!new load.fdr1_load14 bus=fdr1_9_load_14 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+!new load.fdr1_load15 bus=fdr1_9_load_15 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+
+
+/* ########################################### FEEDER 2 ######################################################################## */
+! Feeder 2 model
+! normally closed switches
+new line.fdr2_fdr2_1 bus1=fdr2 bus2=fdr2_1 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr2_3_fdr2_4 bus1=fdr2_3 bus2=fdr2_4 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr2_7_fdr2_8 bus1=fdr2_7 bus2=fdr2_8 linecode=switch length=0.0001 switch=true units=km
+
+! lines-primary
+new line.fdr2_1_fdr2_2 bus1=fdr2_1 bus2=fdr2_2 linecode=90amps length=0.4 units=km 
+new line.fdr2_2_fdr2_3 bus1=fdr2_2 bus2=fdr2_3 linecode=90amps length=0.4 units=km 
+new line.fdr2_4_fdr2_5 bus1=fdr2_4 bus2=fdr2_5 linecode=90amps length=0.4 units=km 
+new line.fdr2_5_fdr2_6 bus1=fdr2_5 bus2=fdr2_6 linecode=90amps length=0.4 units=km 
+new line.fdr2_6_fdr2_7 bus1=fdr2_6 bus2=fdr2_7 linecode=90amps length=0.4 units=km 
+new line.fdr2_8_fdr2_9 bus1=fdr2_8 bus2=fdr2_9 linecode=90amps length=0.4 units=km 
+
+! transformers connecting to load bus
+new transformer.fdr2_tr1 phases=3 windings=2 buses=[fdr2_2 fdr2_2_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new transformer.fdr2_tr2 phases=3 windings=2 buses=[fdr2_5 fdr2_5_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new transformer.fdr2_tr3 phases=3 windings=2 buses=[fdr2_8 fdr2_8_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+
+! loads on the load bus
+new load.fdr2_load1 bus1=fdr2_2_load phases=3 kv=0.416 kw=250 pf=1 conn=wye
+new load.fdr2_load2 bus1=fdr2_5_load phases=3 kv=0.416 kw=250 pf=1 conn=wye
+new load.fdr2_load3 bus1=fdr2_8_load phases=3 kv=0.416 kw=250 pf=1 conn=wye
+
+! lateral-1
+new transformer.fdr2_tr4 phases=3 windings=2 buses=[fdr2_3 fdr2_3_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[50 50]  %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr2_3_load_fdr2_3_load_4 bus1=fdr2_3_load bus2=fdr2_3_load_4 linecode=65amps length=0.04 units=km 
+new line.fdr2_3_load_4_fdr2_3_load_5 bus1=fdr2_3_load_4 bus2=fdr2_3_load_5 linecode=65amps length=0.04 units=km 
+new line.fdr2_3_load_5_fdr2_3_load_6 bus1=fdr2_3_load_5 bus2=fdr2_3_load_6 linecode=65amps length=0.04 units=km 
+new line.fdr2_3_load_6_fdr2_3_load_7 bus1=fdr2_3_load_6 bus2=fdr2_3_load_7 linecode=65amps length=0.04 units=km 
+!new load.fdr2_load4 bus=fdr2_3_load_4 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+!new load.fdr2_load5 bus=fdr2_3_load_5 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+new load.fdr2_load6 bus=fdr2_3_load_6 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+new load.fdr2_load7 bus=fdr2_3_load_7 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+
+! lateral-2
+new transformer.fdr2_tr5 phases=3 windings=2 buses=[fdr2_6 fdr2_6_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[150,150] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr2_6_load_fdr2_6_load_8 bus1=fdr2_6_load bus2=fdr2_6_load_8 linecode=177amps length=0.04 units=km 
+new line.fdr2_6_load_8_fdr2_6_load_9 bus1=fdr2_6_load_8 bus2=fdr2_6_load_9 linecode=177amps length=0.04 units=km 
+new line.fdr2_6_load_9_fdr2_6_load_10 bus1=fdr2_6_load_9 bus2=fdr2_6_load_10 linecode=177amps length=0.04 units=km 
+new line.fdr2_6_load_10_fdr2_6_load_11 bus1=fdr2_6_load_10 bus2=fdr2_6_load_11 linecode=177amps length=0.04 units=km 
+new load.fdr2_load8 bus=fdr2_6_load_8 phases=3 kv=0.416 kw=35 pf=1 conn=wye
+!new load.fdr2_load9 bus=fdr2_6_load_9 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+!new load.fdr2_load10 bus=fdr2_6_load_10 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+new load.fdr2_load11 bus=fdr2_6_load_11 phases=3 kv=0.416 kw=25 pf=1 conn=wye
+
+! lateral-3
+new transformer.fdr2_tr6 phases=3 windings=2 buses=[fdr2_9 fdr2_9_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[250,250] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr2_9_load_fdr2_9_load_12 bus1=fdr2_9_load bus2=fdr2_9_load_12 linecode=230amps length=0.04 units=km 
+new line.fdr2_9_load_12_fdr2_9_load_13 bus1=fdr2_9_load_12 bus2=fdr2_9_load_13 linecode=230amps length=0.04 units=km 
+new line.fdr2_9_load_13_fdr2_9_load_14 bus1=fdr2_9_load_13 bus2=fdr2_9_load_14 linecode=230amps length=0.04 units=km 
+new line.fdr2_9_load_14_fdr2_9_load_15 bus1=fdr2_9_load_14 bus2=fdr2_9_load_15 linecode=230amps length=0.04 units=km 
+new load.fdr2_load12 bus=fdr2_9_load_12 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.fdr2_load13 bus=fdr2_9_load_13 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+!new load.fdr2_load14 bus=fdr2_9_load_14 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+!new load.fdr2_load15 bus=fdr2_9_load_15 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+
+/* ########################################### FEEDER 3 ######################################################################## */
+! Feeder 3 model
+! normally closed switches
+new line.fdr3_fdr3_1 bus1=fdr3 bus2=fdr3_1 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr3_3_fdr3_4 bus1=fdr3_3 bus2=fdr3_4 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr3_7_fdr3_8 bus1=fdr3_7 bus2=fdr3_8 linecode=switch length=0.0001 switch=true units=km
+
+! lines-primary
+new line.fdr3_1_fdr3_2 bus1=fdr3_1 bus2=fdr3_2 linecode=90amps length=0.4 units=km 
+new line.fdr3_2_fdr3_3 bus1=fdr3_2 bus2=fdr3_3 linecode=90amps length=0.4 units=km 
+new line.fdr3_4_fdr3_5 bus1=fdr3_4 bus2=fdr3_5 linecode=90amps length=0.4 units=km 
+new line.fdr3_5_fdr3_6 bus1=fdr3_5 bus2=fdr3_6 linecode=90amps length=0.4 units=km 
+new line.fdr3_6_fdr3_7 bus1=fdr3_6 bus2=fdr3_7 linecode=90amps length=0.4 units=km 
+new line.fdr3_8_fdr3_9 bus1=fdr3_8 bus2=fdr3_9 linecode=90amps length=0.4 units=km 
+
+! transformers connecting to load bus
+new transformer.fdr3_tr1 phases=3 windings=2 buses=[fdr3_2 fdr3_2_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new transformer.fdr3_tr2 phases=3 windings=2 buses=[fdr3_5 fdr3_5_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new transformer.fdr3_tr3 phases=3 windings=2 buses=[fdr3_8 fdr3_8_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[450 450] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+
+! loads on the load bus
+new load.fdr3_load1 bus1=fdr3_2_load phases=3 kv=0.416 kw=350 pf=1 conn=wye
+new load.fdr3_load2 bus1=fdr3_5_load phases=3 kv=0.416 kw=350 pf=1 conn=wye
+new load.fdr3_load3 bus1=fdr3_8_load phases=3 kv=0.416 kw=350 pf=1 conn=wye
+
+! lateral-1
+new transformer.fdr3_tr4 phases=3 windings=2 buses=[fdr3_3 fdr3_3_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[50 50]  %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr3_3_load_fdr3_3_load_4 bus1=fdr3_3_load bus2=fdr3_3_load_4 linecode=65amps length=0.04 units=km 
+new line.fdr3_3_load_4_fdr3_3_load_5 bus1=fdr3_3_load_4 bus2=fdr3_3_load_5 linecode=65amps length=0.04 units=km 
+new line.fdr3_3_load_5_fdr3_3_load_6 bus1=fdr3_3_load_5 bus2=fdr3_3_load_6 linecode=65amps length=0.04 units=km 
+new line.fdr3_3_load_6_fdr3_3_load_7 bus1=fdr3_3_load_6 bus2=fdr3_3_load_7 linecode=65amps length=0.04 units=km 
+new load.fdr3_load4 bus=fdr3_3_load_4 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+new load.fdr3_load5 bus=fdr3_3_load_5 phases=3 kv=0.416 kw=12 pf=1 conn=wye
+new load.fdr3_load6 bus=fdr3_3_load_6 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+new load.fdr3_load7 bus=fdr3_3_load_7 phases=3 kv=0.416 kw=10 pf=1 conn=wye
+
+! lateral-2
+new transformer.fdr3_tr5 phases=3 windings=2 buses=[fdr3_6 fdr3_6_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[150,150] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr3_6_load_fdr3_6_load_8 bus1=fdr3_6_load bus2=fdr3_6_load_8 linecode=177amps length=0.04 units=km 
+new line.fdr3_6_load_8_fdr3_6_load_9 bus1=fdr3_6_load_8 bus2=fdr3_6_load_9 linecode=177amps length=0.04 units=km 
+new line.fdr3_6_load_9_fdr3_6_load_10 bus1=fdr3_6_load_9 bus2=fdr3_6_load_10 linecode=177amps length=0.04 units=km 
+new line.fdr3_6_load_10_fdr3_6_load_11 bus1=fdr3_6_load_10 bus2=fdr3_6_load_11 linecode=177amps length=0.04 units=km 
+new load.fdr3_load8 bus=fdr3_6_load_8 phases=3 kv=0.416 kw=35 pf=1 conn=wye
+new load.fdr3_load9 bus=fdr3_6_load_9 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+new load.fdr3_load10 bus=fdr3_6_load_10 phases=3 kv=0.416 kw=45 pf=1 conn=wye
+new load.fdr3_load11 bus=fdr3_6_load_11 phases=3 kv=0.416 kw=25 pf=1 conn=wye
+
+! lateral-3
+new transformer.fdr3_tr6 phases=3 windings=2 buses=[fdr3_9 fdr3_9_load] conns=[wye wye] kvs=[12.47 0.416] kvas=[250,250] %rs=[0.872 0.872] x12=7.9 %loadloss=0.01 %noloadloss=0.001
+new line.fdr3_9_load_fdr3_9_load_12 bus1=fdr3_9_load bus2=fdr3_9_load_12 linecode=230amps length=0.04 units=km 
+new line.fdr3_9_load_12_fdr3_9_load_13 bus1=fdr3_9_load_12 bus2=fdr3_9_load_13 linecode=230amps length=0.04 units=km 
+new line.fdr3_9_load_13_fdr3_9_load_14 bus1=fdr3_9_load_13 bus2=fdr3_9_load_14 linecode=230amps length=0.04 units=km 
+new line.fdr3_9_load_14_fdr3_9_load_15 bus1=fdr3_9_load_14 bus2=fdr3_9_load_15 linecode=230amps length=0.04 units=km 
+new load.fdr3_load12 bus=fdr3_9_load_12 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.fdr3_load13 bus=fdr3_9_load_13 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.fdr3_load14 bus=fdr3_9_load_14 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+new load.fdr3_load15 bus=fdr3_9_load_15 phases=3 kv=0.416 kw=50 pf=1 conn=wye
+
+/* ########################################### Tie switches ########################################################################*/
+! normally open switches
+new line.fdr1_9_fdr3_9 bus1=fdr1_9 bus2=fdr3_9 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr1_6_fdr2_7 bus1=fdr1_6 bus2=fdr2_7 linecode=switch length=0.0001 switch=true units=km 
+new line.fdr2_5_fdr3_5 bus1=fdr2_5 bus2=fdr3_5 linecode=switch length=0.0001 switch=true units=km
+
+! define simulation parameters
+Set DefaultBaseFreq=60
+Set VoltageBases=[69, 12.47, 0.416]
+Calcv
+new energymeter.meter1 element=line.sourcebus_connector
+
+! set normal feeder configuration
+open line.fdr1_9_fdr3_9
+open line.fdr1_6_fdr2_7
+open line.fdr2_5_fdr3_5
+
+! solve the system
+solve
