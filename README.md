@@ -50,6 +50,8 @@ The following outputs can be used by subsequent workflow steps.
 | `p5r` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Slightly modified version of sub feeder within `P5R` region SMARTDS data from `SFO` area. Added PVsystem.| DistributionSystem |
 | `testcasev1` | [@KapilDuwadi](https://github.com/KapilDuwadi) |  Simple test case for CADET testing.| DistributionSystem |
 | `three_feeder_switch` | [@abodh](https://github.com/abodh) | Three feeder test case with switches.| DistributionSystem |
+| `three_feeder_variable_load_no_switch` | [@abodh](https://github.com/abodh) | Three feeder test case with non-identical feeder load without switches.| DistributionSystem |
+| `three_feeder_variable_load_switch` | [@abodh](https://github.com/abodh) | Three feeder test case with non-identical feeder load and switches.| DistributionSystem |
 | `gdm_catalog` | [@AadilLatif](https://github.com/AadilLatif) | Equipment catalog for DistributionSystem models contains over 25000 models for BareConductorEquipment, CapacitorEquipment, ConcentricCableEquipment, DistributionTransformerEquipment, InverterEquipment and SolarEquipment| CatalogSystem |
 
 ## Adding New Dataset
