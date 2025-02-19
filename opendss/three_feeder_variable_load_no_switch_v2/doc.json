@@ -1,0 +1,9 @@
+{
+    "name": "three_feeder_variable_load_no_switch_v2",
+    "description": "Three feeder test case with non-identical feeder load without tie switches.",
+    "contributor": "Abodh Poudyal",
+    "contributed_date": "2024-02-19",
+    "has_geo_coordinate": false,
+    "has_time_series_data": false,
+    "has_split_phase": false
+}
