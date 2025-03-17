@@ -33,7 +33,7 @@ def build_pv_and_inverter_models()-> list[Component]:
             inverter = InverterEquipment(
                 uuid=uuid4(),
                 name=row_data['Name'],
-                capacity=PositiveApparentPower(p_ac_max, "va"),
+                rated_apparent_power=PositiveApparentPower(p_ac_max, "va"),
                 rise_limit=None,
                 fall_limit=None,
                 eff_curve=Curve(
@@ -42,12 +42,12 @@ def build_pv_and_inverter_models()-> list[Component]:
                 ),
                 cutout_percent = float(row_data['MPPTLow']) / p_ac_max * 100 if float(row_data['MPPTLow']) > 0 else 0,
                 cutin_percent = float(row_data['MPPTLow']) / p_ac_max * 100 if float(row_data['MPPTLow']) > 0 else 0,
+                dc_to_ac_efficiency = 100
             )
             solar = SolarEquipment(
                 uuid=uuid4(),
                 name=str(uuid4()),
-                rated_capacity=PositiveActivePower(p_ac_max, "watts"),
-                solar_power=PositiveActivePower(p_ac_max, "watts"),
+                rated_power=PositiveActivePower(p_ac_max, "watts"),
                 resistance = float(0),
                 reactance = float(0),
             )
