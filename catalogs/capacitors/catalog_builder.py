@@ -1,17 +1,20 @@
 from pathlib import Path
 
-from gdm import DistributionSystem, PhaseCapacitorEquipment, CapacitorEquipment, ConnectionType, VoltageTypes
+from gdm import (
+    PhaseCapacitorEquipment,
+    CapacitorEquipment,
+    ConnectionType,
+    VoltageTypes,
+)
 from gdm.quantities import PositiveReactivePower, PositiveResistance, PositiveVoltage
 import pandas as pd
 
 
-
 def losses_watts(kvar):
-    return 0.12*kvar 
+    return 0.12 * kvar
 
 
-def build_capacitor_models()-> list[CapacitorEquipment]:
-
+def build_capacitor_models() -> list[CapacitorEquipment]:
     capacitors = []
     data = pd.read_csv(Path(__file__).parent / "capacitors.csv")
     for _, cap_info in data.iterrows():
@@ -24,7 +27,6 @@ def build_capacitor_models()-> list[CapacitorEquipment]:
         l = losses_watts(q / p)
         r = l / c**2
 
-        
         cap_name = f"Q{q}_V{v}_P{p}_B{b}_F{f}"
         phs_cap_equip = []
         for i in range(p):
@@ -36,7 +38,6 @@ def build_capacitor_models()-> list[CapacitorEquipment]:
                 num_banks=1,
                 num_banks_on=1,
             )
-        )
 
         capacitor = CapacitorEquipment(
             name=cap_name,

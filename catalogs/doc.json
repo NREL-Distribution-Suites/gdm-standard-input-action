@@ -1,9 +1,6 @@
 {
-    "name": "p5r",
-    "description": "Equipment catalog for DistributionSystem models containes over 25000 models for BareConductorEquipment, CapacitorEquipment, ConcentricCableEquipment, DistributionTransformerEquipment, InverterEquipment and SolarEquipment",
+    "name": "gdm_catalog",
+    "description": "Equipment catalog for DistributionSystem models contains over 25000 models for BareConductorEquipment, CapacitorEquipment, ConcentricCableEquipment, DistributionTransformerEquipment, InverterEquipment and SolarEquipment",
     "contributor": "Aadil Latif",
-    "contributed_date": "2024-12-04",
-    "has_geo_coordinate": false,
-    "has_time_series_data": false,
-    "has_split_phase": true
+    "contributed_date": "2024-12-04"
 }
