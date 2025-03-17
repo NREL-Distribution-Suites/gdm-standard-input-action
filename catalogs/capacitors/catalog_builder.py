@@ -32,12 +32,11 @@ def build_capacitor_models() -> list[CapacitorEquipment]:
         for i in range(p):
             phs_cap_equip.append(
                 PhaseCapacitorEquipment(
-                    name=f"{cap_name}_{i}",
-                    rated_capacity=PositiveReactivePower(q / p, "kvar"),
-                    resistance=PositiveResistance(r, "ohm"),
-                    num_banks=1,
-                    num_banks_on=1,
-                )
+                name=f"{cap_name}_{i}",
+                rated_reactive_power=PositiveReactivePower(q/p,"kvar"),
+                resistance=PositiveResistance(r, "ohm"),
+                num_banks=1,
+                num_banks_on=1,
             )
 
         capacitor = CapacitorEquipment(
