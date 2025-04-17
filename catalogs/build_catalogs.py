@@ -1,4 +1,4 @@
-from gdm.distribution.catalog_system import CatalogSystem
+from gdm.distribution import CatalogSystem
 
 from catalogs.capacitors.catalog_builder import build_capacitor_models
 from catalogs.conductors.catalog_builder import build_conductor_models

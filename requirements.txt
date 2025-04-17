@@ -1,4 +1,4 @@
-NREL-ditto @ git+https://github.com/NREL-Distribution-Suites/ditto
+NREL-ditto
 pytest
 jsonschema
 openpyxl

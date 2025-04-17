@@ -1,10 +1,12 @@
 from pathlib import Path
 
-from gdm import (
-    ConnectionType,
-    WindingEquipment,
+from gdm.distribution.common import SequencePair
+from gdm.distribution.equipment import (
     DistributionTransformerEquipment,
-    SequencePair,
+    WindingEquipment,
+)
+from gdm.distribution.enums import (
+    ConnectionType,
     VoltageTypes,
 )
 from gdm.quantities import PositiveVoltage, PositiveApparentPower
@@ -38,7 +40,7 @@ def build_split_phase_xfmr():
         wdg_hv = WindingEquipment(
             resistance=r / 2,
             is_grounded=True,
-            nominal_voltage=PositiveVoltage(v_pri[0], "volt"),
+            rated_voltage=PositiveVoltage(v_pri[0], "volt"),
             rated_power=PositiveApparentPower(kva, "kilova"),
             connection_type=c_pri,
             num_phases=1,
@@ -49,7 +51,7 @@ def build_split_phase_xfmr():
         wdg_lv = WindingEquipment(
             resistance=r / 2,
             is_grounded=False,
-            nominal_voltage=PositiveVoltage(v_sec, "volt"),
+            rated_voltage=PositiveVoltage(v_sec, "volt"),
             rated_power=PositiveApparentPower(kva, "kilova"),
             connection_type=c_sec,
             num_phases=1,

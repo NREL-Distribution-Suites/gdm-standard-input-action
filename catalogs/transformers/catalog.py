@@ -1,11 +1,13 @@
 from pathlib import Path
 
-from gdm import (
+from gdm.distribution.common import SequencePair
+from gdm.distribution.equipment import (
     DistributionTransformerEquipment,
     WindingEquipment,
+)
+from gdm.distribution.enums import (
     ConnectionType,
     VoltageTypes,
-    SequencePair,
 )
 from gdm.quantities import PositiveVoltage, PositiveApparentPower
 import pandas as pd
@@ -51,7 +53,7 @@ class Model:
             winding_1 = WindingEquipment(
                 resistance=row["pct r"] / 2,
                 is_grounded=False,
-                nominal_voltage=PositiveVoltage(primary_voltage, "volt"),
+                rated_voltage=PositiveVoltage(primary_voltage, "volt"),
                 rated_power=PositiveApparentPower(kva_rating, "kilova"),
                 connection_type=ConnectionType.STAR,
                 num_phases=nphases,
@@ -65,7 +67,7 @@ class Model:
             winding_2 = WindingEquipment(
                 resistance=row["pct r"] / 2,
                 is_grounded=False,
-                nominal_voltage=PositiveVoltage(primary_voltage, "volt"),
+                rated_voltage=PositiveVoltage(primary_voltage, "volt"),
                 rated_power=PositiveApparentPower(kva_rating, "kilova"),
                 connection_type=conn,
                 num_phases=nphases,
