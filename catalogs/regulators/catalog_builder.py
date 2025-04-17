@@ -1,11 +1,13 @@
 from pathlib import Path
 from uuid import uuid4
 
-from gdm.distribution.catalog_system import CatalogSystem
-from gdm import (
-    WindingEquipment,
+from gdm.distribution import CatalogSystem
+from gdm.distribution.common import SequencePair
+from gdm.distribution.equipment import (
     DistributionTransformerEquipment,
-    SequencePair,
+    WindingEquipment,
+)
+from gdm.distribution.enums import (
     ConnectionType,
     VoltageTypes,
 )
@@ -20,7 +22,7 @@ def build_regulator_models(xfmr_models: CatalogSystem):
     # a : winding_models = None
     winding_models = list(xfmr_models.get_components(WindingEquipment))
     voltage_levels = set(
-        [x.nominal_voltage.to("volt").magnitude for x in winding_models]
+        [x.rated_voltage.to("volt").magnitude for x in winding_models]
     )
     voltage_levels = sorted(voltage_levels)
 
@@ -43,7 +45,7 @@ def build_regulator_models(xfmr_models: CatalogSystem):
         winding_models = list(
             xfmr_models.get_components(
                 WindingEquipment,
-                filter_func=lambda x: x.nominal_voltage.to("volt").magnitude
+                filter_func=lambda x: x.rated_voltage.to("volt").magnitude
                 == find_closest_voltage_level(v),
             )
         )
@@ -64,7 +66,7 @@ def build_regulator_models(xfmr_models: CatalogSystem):
                 "uuid": uuid4(),
                 "num_phases": p,
                 "tap_positions": [1.0] * p,
-                "nominal_voltage": PositiveVoltage(v, "volt"),
+                "rated_voltage": PositiveVoltage(v, "volt"),
                 "voltage_type": VoltageTypes.LINE_TO_GROUND,
                 "rated_power": PositiveApparentPower(s, "kilova"),
                 "total_taps": 3,
@@ -79,7 +81,7 @@ def build_regulator_models(xfmr_models: CatalogSystem):
                 "uuid": uuid4(),
                 "num_phases": p,
                 "tap_positions": [1.0] * p,
-                "nominal_voltage": PositiveVoltage(v, "volt"),
+                "rated_voltage": PositiveVoltage(v, "volt"),
                 "voltage_type": VoltageTypes.LINE_TO_GROUND,
                 "rated_power": PositiveApparentPower(s, "kilova"),
                 "total_taps": 33,

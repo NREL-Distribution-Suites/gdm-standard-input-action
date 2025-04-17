@@ -1,11 +1,11 @@
 from pathlib import Path
 
+from gdm.distribution.equipment import ConcentricCableEquipment, BareConductorEquipment
 from infrasys import Component
-from gdm import ConcentricCableEquipment, BareConductorEquipment
 from gdm.quantities import (
+    PositiveResistancePULength,
     PositiveDistance,
     PositiveCurrent,
-    PositiveResistancePULength,
     PositiveVoltage,
 )
 import pandas as pd
@@ -125,9 +125,9 @@ def build_conductor_models() -> list[Component]:
                         insulation_diameter=PositiveDistance(
                             insulation_diameter, "inch"
                         ),
-                        emergency_ampacity=PositiveCurrent(
-                            xlp_ampacity * 1.10, "ampere"
-                        ),
+                        # emergency_ampacity=PositiveCurrent(
+                        #     xlp_ampacity * 1.10, "ampere"
+                        # ),
                         ampacity=PositiveCurrent(xlp_ampacity, "ampere"),
                         rated_voltage=PositiveVoltage(600, "volt"),
                     )
@@ -160,9 +160,9 @@ def build_conductor_models() -> list[Component]:
                             insulation_diameter=PositiveDistance(
                                 insulation_diameter, "inch"
                             ),
-                            emergency_ampacity=PositiveCurrent(
-                                poly_ampacity * 1.10, "ampere"
-                            ),
+                            # emergency_ampacity=PositiveCurrent(
+                            #     poly_ampacity * 1.10, "ampere"
+                            # ),
                             ampacity=PositiveCurrent(poly_ampacity, "ampere"),
                             rated_voltage=PositiveVoltage(600, "volt"),
                         )
@@ -230,7 +230,7 @@ def build_conductor_models() -> list[Component]:
             num_neutral_strands=int(n_strands),
             insulation_thickness=PositiveDistance(insulation_thickness_inches, "inch"),
             insulation_diameter=PositiveDistance(diameter_insulation, "inch"),
-            emergency_ampacity=PositiveCurrent(ampacity * 1.10, "ampere"),
+            # emergency_ampacity=PositiveCurrent(ampacity * 1.10, "ampere"),
             ampacity=PositiveCurrent(ampacity, "ampere"),
             rated_voltage=PositiveVoltage(kv, "kilovolt"),
         )
